@@ -1,0 +1,6 @@
+FILTER: prevent-floc Block FLoC fingerprinting JS
+s+([^'"]\s*<head.*>)(?=\s*[^'"])+$1<script language='javascript'>function privoxyCohort() {return ({'id': '0000', 'version': 'spp'});}</script>+isU
+s|(\w+)\.interestCohort|privoxyCohort|gm
+
+SERVER-HEADER-FILTER: disable-floc Disable FLoC for site
+s@^(Content-Type:\s*.*)@$1\nPermissions-Policy: interest-cohort=()@i
